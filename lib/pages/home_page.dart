@@ -25,10 +25,11 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           boxShadow: <BoxShadow>[
             BoxShadow(
-              offset: Offset(0, -3),
+              color: AppColors().kGreyColor,
+              offset: const Offset(0, -3),
               blurRadius: 15,
             ),
           ],

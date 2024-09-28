@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class ProfileImageProvider extends ChangeNotifier{
 
-  String imgUrl = "";
+  String _imgUrl = "";
 
-  String get getImgUrl => imgUrl;
+  String get getImgUrl => _imgUrl;
 
   setImgUrl(String imgUrl) {
-    this.imgUrl = imgUrl;
+    _imgUrl = imgUrl;
     notifyListeners();
   }
 }

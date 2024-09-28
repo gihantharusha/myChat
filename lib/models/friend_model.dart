@@ -11,6 +11,10 @@ class FriendModel {
     required this.uid,
   });
 
+  factory FriendModel.fromJson(Map<String, dynamic> doc){
+    return FriendModel(name: doc['name'], description: doc['des'], imgUrl: doc['imgUrl'], uid: doc['uid']);
+  }
+
   Map<String, dynamic> toJson() {
     return {
       "name": name,

@@ -85,15 +85,25 @@ class _SearchFirendsState extends State<SearchFirends> {
               const SizedBox(
                 height: 30,
               ),
-              StreamBuilder<QuerySnapshot<Object?>?>(
+              StreamBuilder(
                 stream: firestoreService.getFriendsByName(name),
-                builder: (context, AsyncSnapshot<QuerySnapshot<Object?>?> snapshot) {
+                builder: (context, AsyncSnapshot snapshot) {
+                  if(!snapshot.hasData){
+                    return const Center(
+                      child: Text("You have not friends yet"),
+                    );
+                  }
+                  else if(snapshot.connectionState == ConnectionState.waiting){
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }else{
                   return SizedBox(
                     height: MediaQuery.of(context).size.height * 0.7,
                     child: ListView.builder(
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
-                        var documentSnapshot = snapshot.data!.docs[index];
+                        DocumentSnapshot documentSnapshot = snapshot.data!.docs[index];
                         return uid! == documentSnapshot['uid'] ? const SizedBox() : SearchFriendCard(
                           name: documentSnapshot['name'],
                           description: documentSnapshot['des'],
@@ -103,6 +113,7 @@ class _SearchFirendsState extends State<SearchFirends> {
                       },
                     ),
                   );
+                  }
                 }
               ),
             ],

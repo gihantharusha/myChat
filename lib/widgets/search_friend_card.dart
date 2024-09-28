@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:my_chat/service/firestore_service.dart';
 import 'package:my_chat/utils/colors.dart';
 import 'package:my_chat/utils/text_styles.dart';
@@ -13,64 +12,17 @@ class SearchFriendCard extends StatelessWidget {
     super.key,
     required this.name,
     required this.description,
-    required this.imgUrl, required this.uid,
+    required this.imgUrl,
+    required this.uid,
   });
 
   addName(BuildContext context) {
-    showBottomSheet(
-      context: context,
-      builder: (context) {
-        return BottomSheet(
-          onClosing: () {},
-          builder: (context) => Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: <Widget>[
-                TextField(
-                  decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(
-                        color: AppColors().kBlackColor,
-                        width: 1,
-                      ),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(
-                        color: AppColors().kBlackColor,
-                        width: 1,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(
-                        color: AppColors().kBlackColor,
-                        width: 1,
-                      ),
-                    ),
-                    hintText: "Friend name",
-                  ),
-                ),
-                const SizedBox(height: 40),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      FirestoreService().addFriend(name, uid, imgUrl, description);
-                      GoRouter.of(context).pop();
-                    },
-                    child: Text(
-                      "Add friend",
-                      style: AppTextStyles().kBtnStyle,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        );
-      },
+    FirestoreService().addFriend(name, uid, imgUrl, description);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        backgroundColor: Colors.green,
+        content: Text("Your friend is added"),
+      ),
     );
   }
 

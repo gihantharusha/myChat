@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_chat/utils/colors.dart';
 import 'package:my_chat/utils/text_styles.dart';
+import 'package:insta_image_viewer/insta_image_viewer.dart';
 
 class FriendsCard extends StatelessWidget {
   final String name;
@@ -45,11 +46,15 @@ class FriendsCard extends StatelessWidget {
               child: imgUrl == ""
                   ? const Icon(Icons.person)
                   : SizedBox(
-                      height: 200,
+                      height: 250,
                       child: ClipOval(
-                        child: Image.network(
-                          imgUrl,
-                          fit: BoxFit.cover,
+                        child: InstaImageViewer(
+                          child: Image(
+                            image: Image.network(
+                              imgUrl,
+                              fit: BoxFit.cover,
+                            ).image,
+                          ),
                         ),
                       ),
                     ),

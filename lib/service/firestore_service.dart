@@ -8,8 +8,9 @@ import 'package:random_string/random_string.dart';
 class FirestoreService {
   CollectionReference userCollection =
       FirebaseFirestore.instance.collection("users");
-  
-  CollectionReference chatroom = FirebaseFirestore.instance.collection("chatroom");
+
+  CollectionReference chatroom =
+      FirebaseFirestore.instance.collection("chatroom");
 
   final SharedPref sp = SharedPref();
 
@@ -26,11 +27,25 @@ class FirestoreService {
     await userCollection.doc(uid).set(user.toJson());
   }
 
+  Future<void> updateProfilePicture(String url, String uid)async {
+    
+    await userCollection.doc(uid).update({"profilePicture" : url});
+
+  }
+
+  Future<void> updateUserName(String name, String uid) async{
+    await userCollection.doc(uid).update({"name" : name});
+
+  }
+
+  Future<void> updatedescription(String des, String uid) async{
+    await userCollection.doc(uid).update({"des" : des});
+
+  }
+
   Future<User> getUserDetails(String uid) async {
     return userCollection
         .doc(uid)
-        .collection("info")
-        .doc("user")
         .get()
         .then((DocumentSnapshot doc) {
       return User(
@@ -71,8 +86,8 @@ class FirestoreService {
     ids.sort();
     String chatRoomId = ids.join("_");
     String randomId = randomAlphaNumeric(20);
-    MessageModel messageModel =
-        MessageModel(msg: msg, timestamp: DateTime.now(), chatId: randomId, senderId: myId!);
+    MessageModel messageModel = MessageModel(
+        msg: msg, timestamp: DateTime.now(), chatId: randomId, senderId: myId!);
     chatroom
         .doc(chatRoomId)
         .collection("chats")

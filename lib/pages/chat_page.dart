@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_chat/service/firestore_service.dart';
 import 'package:my_chat/utils/colors.dart';
@@ -45,18 +44,32 @@ class _MessagePageState extends State<MessagePage> {
       body: Column(
         children: <Widget>[
           Expanded(
-            child: StreamBuilder<QuerySnapshot<Object?>>(
-                stream: FirestoreService().getAllChats(widget.uid),
-                builder:
-                    (context, AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
+            child: StreamBuilder(
+              stream: FirestoreService().getAllChats(widget.uid),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: Text("You have not chat yet"),
+                  );
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
                   return ListView.builder(
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
                       var ds = snapshot.data!.docs[index];
-                      return MessageCard(msg: ds['msg'], myId: widget.myId, senderId: ds['senderId']);
+                      return MessageCard(
+                          msg: ds['msg'],
+                          myId: widget.myId,
+                          senderId: ds['senderId']);
                     },
                   );
-                }),
+                }
+              },
+            ),
           ),
           Container(
             decoration: BoxDecoration(
