@@ -6,7 +6,7 @@ class ProfileImageProvider extends ChangeNotifier{
 
   String get getImgUrl => imgUrl;
 
-  void setImgUrl(String imgUrl) {
+  setImgUrl(String imgUrl) {
     this.imgUrl = imgUrl;
     notifyListeners();
   }

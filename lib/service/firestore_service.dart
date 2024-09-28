@@ -60,7 +60,7 @@ class FirestoreService {
         .add(friendModel.toJson());
   }
 
-  Stream<QuerySnapshot<Object?>> getAllFriends() async* {
+  Stream<QuerySnapshot> getAllFriends() async* {
     String? myId = await SharedPref().getUser();
     yield* userCollection.doc(myId).collection("friends").snapshots();
   }

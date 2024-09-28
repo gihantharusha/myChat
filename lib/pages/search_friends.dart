@@ -85,9 +85,9 @@ class _SearchFirendsState extends State<SearchFirends> {
               const SizedBox(
                 height: 30,
               ),
-              StreamBuilder(
+              StreamBuilder<QuerySnapshot<Object?>?>(
                 stream: firestoreService.getFriendsByName(name),
-                builder: (context, AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
+                builder: (context, AsyncSnapshot<QuerySnapshot<Object?>?> snapshot) {
                   return SizedBox(
                     height: MediaQuery.of(context).size.height * 0.7,
                     child: ListView.builder(
